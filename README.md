@@ -70,6 +70,12 @@ Você pode testar a API usando ferramentas como **Postman** ou **cURL**. Aqui es
    ```bash
    curl -X GET http://127.0.0.1:5000/todos
 
+   reposta:
+
+   [{"id": 1, "task": "Learn REST", "completed": false},
+    {"id": 2, "task": "Build an API", "completed": true}]   
+
+```
 
 
 ### 2. **POST /todos** - Criar uma nova tarefa
@@ -77,3 +83,10 @@ Você pode testar a API usando ferramentas como **Postman** ou **cURL**. Aqui es
    ```bash
    curl -X POST http://127.0.0.1:5000/todos -H "Content-Type: application/json" -d '{"task": "New Task", "completed": false}'
 
+   reposta:
+
+   {"id": 3,
+    "task": "New Task",
+    "completed": false}
+
+```
