@@ -90,3 +90,19 @@ Você pode testar a API usando ferramentas como **Postman** ou **cURL**. Aqui es
     "completed": false}
 
 ```
+
+## Próximos Passos e Expansões
+
+- **Autenticação e Autorização**: Adicionar segurança com autenticação básica ou OAuth2 para proteger os endpoints.
+- **Banco de Dados**: Substituir o arquivo JSON por um banco de dados (SQLite, PostgreSQL) para maior persistência e escalabilidade.
+- **Documentação Automática**: Implementar uma documentação da API usando Swagger ou outro framework.
+- **Front-end**: Desenvolver uma interface para que usuários possam interagir com a API de forma mais intuitiva.
+
+
+## Referências e Fontes
+
+- Fielding, R. T. (2000). *Architectural Styles and the Design of Network-based Software Architectures*. [Tese de Doutorado]. University of California, Irvine.
+- [Documentação do Flask](https://flask.palletsprojects.com/)
+- [Guia de APIs RESTful da Microsoft](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
+- Richardson, Leonard, e Mike Amundsen. *RESTful Web APIs*. O'Reilly Media, 2013.
+- [REST API Tutorial](https://restfulapi.net/)
