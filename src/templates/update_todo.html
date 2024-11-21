@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Atualizar Tarefa{% endblock %}
+
+{% block content %}
+<h2>Atualizar Tarefa</h2>
+<form action="{{ url_for('update_todo', todo_id=todo.id) }}" method="post">
+    <label for="task">Descrição da Tarefa:</label>
+    <input type="text" id="task" name="task" value="{{ todo.task }}" required>
+    <label for="completed">Concluído:</label>
+    <input type="checkbox" id="completed" name="completed" {% if todo.completed %}checked{% endif %}>
+    <button type="submit">Atualizar</button>
+</form>
+{% endblock %}
