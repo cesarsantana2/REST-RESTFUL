@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Listar Tarefas{% endblock %}
+
+{% block content %}
+<h2>Lista de Tarefas</h2>
+<ul>
+    {% for todo in todos %}
+        <li>{{ todo.task }} - {% if todo.completed %}Concluído{% else %}Pendente{% endif %}</li>
+        <a href="{{ url_for('update_todo', todo_id=todo.id) }}">Editar</a> |
+        <a href="{{ url_for('delete_todo', todo_id=todo.id) }}">Excluir</a>
+    {% endfor %}
+</ul>
+{% endblock %}
