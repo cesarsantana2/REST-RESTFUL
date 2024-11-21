@@ -1,54 +1,44 @@
-from flask import Flask, jsonify, request
-import json
-import os
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Funções para carregar e salvar tarefas em um arquivo JSON
-def load_todos():
-    if os.path.exists('todos.json'):
-        with open('todos.json', 'r') as file:
-            return json.load(file)
-    return []
+# Dados simulados
+todos = [
+    {"id": 1, "task": "Learn REST", "completed": False},
+    {"id": 2, "task": "Build an API", "completed": True}
+]
 
-def save_todos(todos):
-    with open('todos.json', 'w') as file:
-        json.dump(todos, file, indent=4)
+@app.route('/todos')
+def list_todos():
+    return render_template('list_todos.html', todos=todos)
 
-# Carregar tarefas iniciais do arquivo JSON
-todos = load_todos()
-
-# Endpoint para listar todas as tarefas (GET)
-@app.route('/todos', methods=['GET'])
-def get_todos():
-    return jsonify(todos)
-
-# Endpoint para criar uma nova tarefa (POST)
-@app.route('/todos', methods=['POST'])
+@app.route('/todos/new', methods=['GET', 'POST'])
 def create_todo():
-    new_todo = request.json
-    new_todo['id'] = len(todos) + 1  # Geração simples de ID
-    todos.append(new_todo)
-    save_todos(todos)  # Salvar no arquivo após criar uma nova tarefa
-    return jsonify(new_todo), 201
+    if request.method == 'POST':
+        task = request.form['task']
+        completed = 'completed' in request.form
+        new_todo = {"id": len(todos) + 1, "task": task, "completed": completed}
+        todos.append(new_todo)
+        return redirect(url_for('list_todos'))
+    return render_template('create_todo.html')
 
-# Endpoint para atualizar uma tarefa (PUT)
-@app.route('/todos/<int:todo_id>', methods=['PUT'])
+@app.route('/todos/<int:todo_id>/edit', methods=['GET', 'POST'])
 def update_todo(todo_id):
     todo = next((t for t in todos if t["id"] == todo_id), None)
-    if not todo:
-        return jsonify({"error": "Todo not found"}), 404
-    todo.update(request.json)
-    save_todos(todos)  # Salvar no arquivo após a atualização
-    return jsonify(todo)
+    if request.method == 'POST':
+        todo['task'] = request.form['task']
+        todo['completed'] = 'completed' in request.form
+        return redirect(url_for('list_todos'))
+    return render_template('update_todo.html', todo=todo)
 
-# Endpoint para deletar uma tarefa (DELETE)
-@app.route('/todos/<int:todo_id>', methods=['DELETE'])
+@app.route('/todos/<int:todo_id>/delete', methods=['POST', 'GET'])
 def delete_todo(todo_id):
     global todos
-    todos = [t for t in todos if t["id"] != todo_id]
-    save_todos(todos)  # Salvar no arquivo após deletar uma tarefa
-    return '', 204
+    if request.method == 'POST':
+        todos = [t for t in todos if t["id"] != todo_id]
+        return redirect(url_for('list_todos'))
+    todo = next((t for t in todos if t["id"] == todo_id), None)
+    return render_template('delete_todo.html', todo=todo)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
