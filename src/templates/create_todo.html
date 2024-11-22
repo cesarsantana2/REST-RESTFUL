@@ -3,12 +3,22 @@
 {% block title %}Criar Tarefa{% endblock %}
 
 {% block content %}
-<h2>Criar Nova Tarefa</h2>
-<form action="{{ url_for('create_todo') }}" method="post">
-    <label for="task">Descrição da Tarefa:</label>
-    <input type="text" id="task" name="task" required>
-    <label for="completed">Concluído:</label>
-    <input type="checkbox" id="completed" name="completed">
-    <button type="submit">Criar</button>
-</form>
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h2 class="h4 mb-0">Criar Nova Tarefa</h2>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('create_todo') }}" method="post">
+            <div class="mb-3">
+                <label for="task" class="form-label">Descrição da Tarefa:</label>
+                <input type="text" id="task" name="task" class="form-control" placeholder="Digite a tarefa..." required>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" id="completed" name="completed" class="form-check-input">
+                <label for="completed" class="form-check-label">Concluído</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Criar</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

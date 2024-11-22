@@ -3,12 +3,27 @@
 {% block title %}Listar Tarefas{% endblock %}
 
 {% block content %}
-<h2>Lista de Tarefas</h2>
-<ul>
-    {% for todo in todos %}
-        <li>{{ todo.task }} - {% if todo.completed %}Concluído{% else %}Pendente{% endif %}</li>
-        <a href="{{ url_for('update_todo', todo_id=todo.id) }}">Editar</a> |
-        <a href="{{ url_for('delete_todo', todo_id=todo.id) }}">Excluir</a>
-    {% endfor %}
-</ul>
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h2 class="h4 mb-0">Lista de Tarefas</h2>
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            {% for todo in todos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <strong>{{ todo.task }}</strong> - 
+                        <span class="{% if todo.completed %}text-success{% else %}text-warning{% endif %}">
+                            {% if todo.completed %}Concluído{% else %}Pendente{% endif %}
+                        </span>
+                    </span>
+                    <div>
+                        <a href="{{ url_for('update_todo', todo_id=todo.id) }}" class="btn btn-sm btn-outline-primary me-2">Editar</a>
+                        <a href="{{ url_for('delete_todo', todo_id=todo.id) }}" class="btn btn-sm btn-outline-danger">Excluir</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
